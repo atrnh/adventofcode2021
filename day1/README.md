@@ -74,5 +74,56 @@ def count_depth_incr(depths):
 
 ## Part 2
 
-Still working on the explainer for Part 2 😀.
+**The twist in Part 2** wasn't to perform some other procedure on a number and its proceeding
+number like I'd guessed; instead, it was to **take a rolling sum of measurements, 3
+measurements at a time** and *then* count the depth increases.
 
+So, as I mentioned earlier, I never got to take advantage of my (overengineered)
+`do_with_next` function but I *was* able to save myself from writing a ton of new code by
+borrowing from example code in the Python docs!
+
+### My solution
+
+I wanted to implement the *rolling sum* part of this challenge with
+[`collections.deque`](https://docs.python.org/3/library/collections.html#deque-objects).
+This is where skimming through documentation can really pay off &mdash; right below the
+list of all `deque` methods, there's a little section called [`deque`
+Recipes](https://docs.python.org/3/library/collections.html#deque-recipes) and in that
+section, you'll find this example function called `moving_average`:
+
+```python
+def moving_average(iterable, n=3):
+    # moving_average([40, 30, 50, 46, 39, 44]) --> 40.0 42.0 45.0 43.0
+    # http://en.wikipedia.org/wiki/Moving_average
+    it = iter(iterable)
+    d = deque(itertools.islice(it, n-1))
+    d.appendleft(0)
+    s = sum(d)
+    for elem in it:
+        s += elem - d.popleft()
+        d.append(elem)
+        yield s / n
+```
+
+This is almost exactly what I need (even down to the default width of the window being
+`n=3`). With one small modification to `yield s` instead of `s / n`...
+
+```python
+def moving_sum(iterable, n=3):
+    it = iter(iterable)
+    d = deque(itertools.islice(it, n - 1))
+    d.appendleft(0)
+    s = sum(d)
+    for elem in it:
+        s += elem - d.popleft()
+        d.append(elem)
+        yield s
+```
+
+...we can count depth increases after taking a rolling sum of depths like so:
+
+```python
+def count_rolling_depth_incr(depths):
+    rolling_depths = moving_sum(depths)
+    return count_depth_incr(rolling_depths)
+```
