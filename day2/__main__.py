@@ -16,16 +16,14 @@ if __name__ == "__main__":
         submarine1 = handler(value, *submarine1)
 
     x, y = submarine1
-    # print(x * y)
+    print(x * y)
 
     # Part 2
     submarine2 = 0, 0, 0
     for command, value in inpt:
-        print(f"Handle {command} {value}")
         handler = aim_handlers[command]
 
         submarine2 = handler(value, *submarine2)
-        print(submarine2)
 
     x, y, *_ = submarine2
     print(x * y)
