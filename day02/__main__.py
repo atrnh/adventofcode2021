@@ -1,6 +1,5 @@
 """Advent of Code 2021: Day 2"""
 
-
 import sys
 
 from . import tokenize, handlers, aim_handlers
