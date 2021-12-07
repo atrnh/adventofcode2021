@@ -1,8 +1,8 @@
 # Day 1: Sonar Sweep
 
-<small>
+<sup>
   <a href="https://adventofcode.com/2021/day/1">🔗 Advent of Code 2021: Day 1</a>
-</small><br><br>
+</sup><br><br>
 
 This isn't my first Advent of Code. I'm already familiar with the way these challenges are
 generally structured. Each challenge has two parts but...!

@@ -1,6 +1,6 @@
 # Day 2: Dive!
 
-<small>
+<sup>
   <a href="https://adventofcode.com/2021/day/2">🔗 Advent of Code 2021: Day 2</a>
-</small><br><br>
+</sup><br><br>
 
