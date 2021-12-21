@@ -24,17 +24,17 @@ def to_dec(bits: List[int]) -> int:
 
 
 def calculate_crit(
-    bits: List[int], criteria: Callable[[int, int], int], default: int
+    bits: List[int], criterion: Callable[[int, int], int], default: int
 ) -> int:
-    most, most_val, least, least_val = chain.from_iterable(
+    most, most_count, least, least_count = chain.from_iterable(
         Counter(bits).most_common()
     )
 
-    return criteria(most, least) if most_val != least_val else default
+    return criterion(most, least) if most_count != least_count else default
 
 
 def build_rating_calculator(
-    criteria: Callable[[int, int], int], default: int
+    criterion: Callable[[int, int], int], default: int
 ) -> Callable[[List[List[int]]], int]:
     def calculate_rating(mtx: List[List[int]]) -> int:
         candidates = mtx[:]
@@ -43,7 +43,7 @@ def build_rating_calculator(
         while len(candidates) > 1:
             transposed = transpose(candidates)
             bits = transposed[i]
-            crit = calculate_crit(bits, criteria, default)
+            crit = calculate_crit(bits, criterion, default)
 
             candidates = list(
                 compress(candidates, bits if crit else toggled_bits(bits))

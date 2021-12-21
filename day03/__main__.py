@@ -22,9 +22,9 @@ if __name__ == "__main__":
 
     # Part 2
     calculate_oxy = build_rating_calculator(lambda most, _: most, default=1)
-    calclate_co2 = build_rating_calculator(lambda _, least: least, default=0)
+    calculate_co2 = build_rating_calculator(lambda _, least: least, default=0)
 
     oxy = calculate_oxy(inpt)
-    co2 = calclate_co2(inpt)
+    co2 = calculate_co2(inpt)
 
     print(to_dec(oxy) * to_dec(co2))
